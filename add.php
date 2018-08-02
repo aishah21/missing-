@@ -1,3 +1,42 @@
+<?php 
+require "connect.php";
+/*if(isset($_POST['submit']))
+{
+    $fname=$_POST['fname'];
+    $phone=$_POST['phone'];
+    $descript=$_POST['description'];
+    $Category=$_POST['Category'];
+    $type=$_POST['type'];
+    $sql="INSERT INTO info (name,phone,description,type,name_it)VALUES 
+    ('$fname','$phone','$descript','$type','$Category')";
+    $res=mysqli_query($link,$sql);
+
+}*/
+
+if (isset($_FILES['img'])) {
+    $imgname=$_FILES['img']['name'];
+     $imgtype=$_FILES['img']['type'];
+      $imgsize=$_FILES['img']['size'];
+       $imgtem=$_FILES['img']['tmp_name'];
+
+       if(move_uploaded_file($imgtem, "images/".$imgname)){
+        $path="images/".$imgname;
+         $fname=$_POST['fname'];
+    $phone=$_POST['phone'];
+    $descript=$_POST['description'];
+    $Category=$_POST['Category'];
+    $type=$_POST['type'];
+    $sql="INSERT INTO info (name,phone,description,type,name_it,pic)VALUES 
+    ('$fname','$phone','$descript','$type','$Category','$path')";
+    $res=mysqli_query($link,$sql);
+       }
+       else{
+echo "string";
+       }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,7 +79,7 @@
             
 
 
-        <form class="well form-horizontal"  method="POST"  id="contact_form" >
+        <form class="well form-horizontal"  method="POST"  id="contact_form" enctype="multipart/form-data">
 <fieldset>
 
 <!-- Form Name -->
@@ -77,6 +116,16 @@
     <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
             <textarea class="form-control" name="description" placeholder=""></textarea>
+  </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label"> Image </label>
+    <div class="col-md-4 inputGroupContainer">
+    <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+            <input name="img" placeholder="+966 555555555" class="form-control" type="file">
   </div>
   </div>
 </div>
